@@ -28,7 +28,7 @@ namespace Omnix.SceneManagement
             }
         }
 
-        public static void Load(SceneId id, LoadSceneMode mode = LoadSceneMode.Single, bool isAsync = true)
+        public static void Load(SceneId id, LoadSceneMode mode = LoadSceneMode.Single, bool isAsync = false)
         {
             if (id == SceneId.Unknown)
             {

@@ -10,7 +10,7 @@ namespace Omnix.SceneManagement
         {
             return index >= 0 && index < BI.BUILD_INDEX.Length;
         }
-
+        
         /// <returns>
         /// Name of the scene with <see cref="SceneId"/>.
         /// Empty string if scene id is <see cref="SceneId.Unknown"/> or invalid (in case of <see cref="SceneId.PreviousScene"/> / <see cref="SceneId.NextScene"/>)
@@ -75,6 +75,13 @@ namespace Omnix.SceneManagement
         public static void Load(this SceneId id, LoadSceneMode mode = LoadSceneMode.Single, bool isAsync = true)
         {
             SceneLoader.Load(id, mode, isAsync);
+        }
+
+        public static bool Compare(this SceneId id1, SceneId id2)
+        {
+            string name1 = GetName(id1);
+            string name2 = GetName(id2);
+            return string.Equals(name1, name2);
         }
     }
 }
