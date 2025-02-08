@@ -1,6 +1,6 @@
 {
   "name": "com.omnix.scene_management",
-  "version": "0.1",
+  "version": "0.0.1",
   "displayName": "Scene Management",
   "description": "Helps you manage/navigate your scenes a bit better.",
   "unity": "2022.3",
