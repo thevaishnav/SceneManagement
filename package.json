@@ -1,0 +1,16 @@
+{
+  "name": "com.omnix.scene_management",
+  "version": "0.1",
+  "displayName": "Scene Management",
+  "description": "Helps you manage/navigate your scenes a bit better.",
+  "unity": "2022.3",
+  "documentationUrl": "https://github.com/thevaishnav/SceneManagement",
+  "dependencies": {},
+  "keywords": [
+    "Scene Management"
+  ],
+  "author": {
+    "name": "Dev Logger",
+    "email": "itsdevlogger@gmail.com",
+  }
+}
