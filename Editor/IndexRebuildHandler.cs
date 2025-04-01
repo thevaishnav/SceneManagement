@@ -63,7 +63,7 @@ BUILD_INDEX_ENTRIES
 
     private const string INDEX_DATA_RESOURCE_NAME = "SceneIndexData";
     private const string INDEX_DATA_RESOURCE_PATH = "Assets/Editor/Resources";
-    private const string TEMP_SCENE_ID_GUID = "a5bea2d20a604267829ad47212707b57";
+    private const string TEMP_SCENE_ID_GUID = "9768c0ca177aa244b94d1da3eb61b469";
     private const string SCRIPT_FOLDER = "Assets/Scripts";
     private const string SCRIPT_PATH = SCRIPT_FOLDER + "/SceneId (Auto Generated).cs";
 
