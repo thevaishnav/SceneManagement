@@ -63,7 +63,9 @@ BUILD_INDEX_ENTRIES
 
     private const string INDEX_DATA_RESOURCE_NAME = "SceneIndexData";
     private const string INDEX_DATA_RESOURCE_PATH = "Assets/Editor/Resources";
-    private const string SCRIPT_GUID = "a5bea2d20a604267829ad47212707b57";
+    private const string TEMP_SCENE_ID_GUID = "a5bea2d20a604267829ad47212707b57";
+    private const string SCRIPT_FOLDER = "Assets/Scripts";
+    private const string SCRIPT_PATH = SCRIPT_FOLDER + "/SceneId (Auto Generated).cs";
 
     private static SceneIndexData LoadOrCreateSceneIndex()
     {
@@ -151,10 +153,10 @@ BUILD_INDEX_ENTRIES
             sceneEntries.Add(entry);
         }
 
-        // Generate enum file
-        string scriptPath = AssetDatabase.GUIDToAssetPath(SCRIPT_GUID);
-        if (string.IsNullOrEmpty(scriptPath))
-            throw new Exception($"Invalid GUID: {SCRIPT_GUID}. Cannot find asset path.");
+        // Delete Temp Script (Included in the project to sure it compliles)
+        string scriptPath = AssetDatabase.GUIDToAssetPath(TEMP_SCENE_ID_GUID);
+        if (!string.IsNullOrEmpty(scriptPath) && File.Exists(scriptPath))
+            File.Delete(scriptPath);
 
         sceneEntries.Sort((s1, s2) => s1.enumValue.CompareTo(s2.enumValue));
 
@@ -162,7 +164,11 @@ BUILD_INDEX_ENTRIES
         string buildIndexEntries = string.Join(",\n", scenesInBuild.Select(SelectBuildIndexEntry));
         string generatedCode = SCRIPT_TEMPLATE.Replace("SCENE_ID_ENTRIES", sceneIdEntries)
             .Replace("BUILD_INDEX_ENTRIES", buildIndexEntries);
-        File.WriteAllText(scriptPath, generatedCode);
+        
+        if (!Directory.Exists(SCRIPT_FOLDER))
+            Directory.CreateDirectory(SCRIPT_FOLDER);
+        
+        File.WriteAllText(SCRIPT_PATH, generatedCode);
         AssetDatabase.Refresh();
 
         // Persist updated list

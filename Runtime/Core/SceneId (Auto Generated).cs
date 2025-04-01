@@ -24,16 +24,13 @@ public static class BI
     {
     };
 
-    public static readonly Dictionary<SceneId, string> ID_TO_NAME;
-    public static readonly Dictionary<string, SceneId> NAME_TO_ID;
-    public static readonly Dictionary<SceneId, int> ID_TO_INDEX;
+    public static readonly Dictionary<SceneId, string> ID_TO_NAME = new Dictionary<SceneId, string>();
+    public static readonly Dictionary<string, SceneId> NAME_TO_ID = new Dictionary<string, SceneId>();
+    public static readonly Dictionary<SceneId, int> ID_TO_INDEX = new Dictionary<SceneId, int>();
 
-    static BI()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void Init()
     {
-        ID_TO_NAME = new Dictionary<SceneId, string>();
-        ID_TO_INDEX = new Dictionary<SceneId, int>();
-        NAME_TO_ID = new Dictionary<string, SceneId>();
-
         int index = -3;
         foreach ((SceneId id, string name) in BUILD_INDEX)
         {

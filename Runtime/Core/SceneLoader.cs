@@ -12,9 +12,6 @@ namespace Omnix.SceneManagement
         [CanBeNull] public static AsyncOperation LoadingOperation { get; private set; }
         public static SceneId CurrentlyLoading { get; private set; } = SceneId.Unknown;
 
-        private static bool taskInProgress;
-        private static TaskQueue queue;
-
         private static void OnLoadComplete(Scene scene, LoadSceneMode _)
         {
             SceneId sceneId = scene.name.SceneNameToId();
@@ -24,8 +21,13 @@ namespace Omnix.SceneManagement
             {
                 LoadingOperation = null;
                 CurrentlyLoading = SceneId.Unknown;
-                queue.TaskDone();
             }
+        }
+
+        [RuntimeInitializeOnLoadMethod]
+        private static void Init()
+        {
+            SceneManager.sceneLoaded += OnLoadComplete;
         }
 
         public static void Load(SceneId id, LoadSceneMode mode = LoadSceneMode.Single, bool isAsync = false)
@@ -36,25 +38,6 @@ namespace Omnix.SceneManagement
                 return;
             }
             
-            Debug.Log($"Loading scene: {id}");
-            if (queue == null)
-            {
-                queue = new TaskQueue();
-                SceneManager.sceneLoaded += OnLoadComplete;
-            }
-            
-            queue.BeginTask(() => TaskLoad(id, mode, isAsync));
-        }
-        
-        private static void TaskLoad(SceneId id, LoadSceneMode mode, bool isAsync)
-        {
-            // Checks
-            if (id == SceneId.Unknown)
-            {
-                Debug.LogError("Trying to load unknown scene");
-                return;
-            }
-
             string sceneName = id.GetName();
             if (string.IsNullOrEmpty(sceneName))
             {
